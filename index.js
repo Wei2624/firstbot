@@ -25,7 +25,6 @@ try {
   // if running from repo
   Wit = require('../').Wit;
   log = require('../').log;
-  interactive = require('../').interactive;
 } catch (e) {
   Wit = require('node-wit').Wit;
   log = require('node-wit').log;
@@ -50,57 +49,29 @@ crypto.randomBytes(8, (err, buff) => {
   console.log(`/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
 });
 
-// ----------------------------------------------------------------------------
-// Messenger API specific code
-
-// See the Send API reference
-// https://developers.facebook.com/docs/messenger-platform/send-api-reference
-
-const fbMessage = (id, text) => {
-  const body = JSON.stringify({
-    recipient: { id },
-    message: { text },
-  });
-  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-  return fetch('https://graph.facebook.com/me/messages?' + qs, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body,
-  })
-  .then(rsp => rsp.json())
-  .then(json => {
-    if (json.error && json.error.message) {
-      throw new Error(json.error.message);
-    }
-    return json;
-  });
-};
-
-// ----------------------------------------------------------------------------
-// Wit.ai bot specific code
-
-// This will contain all user sessions.
-// Each session has an entry:
-// sessionId -> {fbid: facebookUserId, context: sessionState}
 const sessions = {};
 
-const findOrCreateSession = (fbid) => {
-  let sessionId;
-  // Let's see if we already have a session for the user fbid
-  Object.keys(sessions).forEach(k => {
-    if (sessions[k].fbid === fbid) {
-      // Yep, got it!
-      sessionId = k;
-    }
-  });
-  if (!sessionId) {
-    // No session found for user fbid, let's create a new one
-    sessionId = new Date().toISOString();
-    sessions[sessionId] = {fbid: fbid, context: {}};
-  }
-  return sessionId;
-};
+const {interactive} = require('node-wit');
 
+const actions = {
+    send(request, response) {
+      const {sessionId, context, entities} = request;
+      const {text, quickreplies} = response;
+      console.log('sending...', JSON.stringify(response));
+    },
+    getForecast({context, entities}) {
+      var location = firstEntityValue(entities, 'location');
+      if (location) {
+          context.forecast = 'sunny in ' + location; // we should call a weather API here
+          delete context.missingLocation;
+      } else {
+          context.missingLocation = true;
+          delete context.forecast;
+      }
+      return context;
+      },
+  };
+const wit = new Wit({WIT_TOKEN, actions});
 
 // Starting our webserver and putting it all together
 const app = express();
@@ -124,9 +95,6 @@ app.get('/webhook', (req, res) => {
 
 // Message handler
 app.post('/webhook', (req, res) => {
-  // Parse the Messenger payload
-  // See the Webhook reference
-  // https://developers.facebook.com/docs/messenger-platform/webhook-reference
   const data = req.body;
 
   if (data.object === 'page') {
@@ -150,26 +118,18 @@ app.post('/webhook', (req, res) => {
             fbMessage(sender, 'Sorry I can only process text messages for now.')
             .catch(console.error);
           } else if (text) {
-          	 const actions = {
-          		send(request, response) {
-            		const {sessionId, context, entities} = request;
-            		const {text, quickreplies} = response;
-            		console.log('sending...', JSON.stringify(response));
-          		},
-          		getForecast({context, entities}) {
-            		var location = firstEntityValue(entities, 'location');
-            		if (location) {
-                		context.forecast = 'sunny in ' + location; // we should call a weather API here
-                		delete context.missingLocation;
-            		} else {
-                		context.missingLocation = true;
-                		delete context.forecast;
-            		}
-            		return context;
-          			},
-      		};
-      		const client = new Wit({WIT_TOKEN, actions});
-			interactive(client);
+
+              interactive(wit);
+
+              // Based on the session state, you might want to reset the session.
+              // This depends heavily on the business logic of your bot.
+              // Example:
+              // if (context['done']) {
+              //   delete sessions[sessionId];
+              // }
+
+              // Updating the user's current session state
+
           }
         } else {
           console.log('received event', JSON.stringify(event));
@@ -180,35 +140,7 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 });
 
-/*
- * Verify that the callback came from Facebook. Using the App Secret from
- * the App Dashboard, we can verify the signature that is sent with each
- * callback in the x-hub-signature field, located in the header.
- *
- * https://developers.facebook.com/docs/graph-api/webhooks#setup
- *
- */
-function verifyRequestSignature(req, res, buf) {
-  var signature = req.headers["x-hub-signature"];
 
-  if (!signature) {
-    // For testing, let's log an error. In production, you should throw an
-    // error.
-    console.error("Couldn't validate the signature.");
-  } else {
-    var elements = signature.split('=');
-    var method = elements[0];
-    var signatureHash = elements[1];
-
-    var expectedHash = crypto.createHmac('sha1', FB_APP_SECRET)
-                        .update(buf)
-                        .digest('hex');
-
-    if (signatureHash != expectedHash) {
-      throw new Error("Couldn't validate the request signature.");
-    }
-  }
-}
 
 app.listen(PORT);
 console.log('Listening on :' + PORT + '...');
