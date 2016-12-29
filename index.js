@@ -25,6 +25,7 @@ try {
   // if running from repo
   Wit = require('../').Wit;
   log = require('../').log;
+  interactive = require('../').interactive;
 } catch (e) {
   Wit = require('node-wit').Wit;
   log = require('node-wit').log;
@@ -203,6 +204,8 @@ app.post('/webhook', (req, res) => {
             		return context;
           			},
       		};
+      		const client = new Wit({accessToken, actions});
+			interactive(client);
           }
         } else {
           console.log('received event', JSON.stringify(event));
