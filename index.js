@@ -25,6 +25,7 @@ try {
   // if running from repo
   Wit = require('../').Wit;
   log = require('../').log;
+  interactive = require('../').interactive;
 } catch (e) {
   Wit = require('node-wit').Wit;
   log = require('node-wit').log;
@@ -187,16 +188,38 @@ app.post('/webhook', (req, res) => {
           } else if (text) {
             // We received a text message
 
+            const actions = {
+  				send(request, response) {
+    				const {sessionId, context, entities} = request;
+    				const {text, quickreplies} = response;
+    				console.log('sending...', JSON.stringify(response));
+  				},
+  				getForecast({context, entities}) {
+    				var location = firstEntityValue(entities, 'location');
+    				if (location) {
+      					context.forecast = 'sunny in ' + location; // we should call a weather API here
+      					delete context.missingLocation;
+    				} else {
+      					context.missingLocation = true;
+      					delete context.forecast;
+    				}
+    				return context;
+  				},
+			};
+
+			const client = new Wit({accessToken, actions});
+			interactive(client);
+
             // Let's forward the message to the Wit.ai Bot Engine
             // This will run all actions until our bot has nothing left to do
-            wit.runActions(
-              sessionId, // the user's current session
-              text, // the user's message
-              sessions[sessionId].context // the user's current session state
-            ).then((context) => {
-              // Our bot did everything it has to do.
-              // Now it's waiting for further messages to proceed.
-              console.log('Waiting for next user messages');
+            // wit.runActions(
+            //   sessionId, // the user's current session
+            //   text, // the user's message
+            //   sessions[sessionId].context // the user's current session state
+            // ).then((context) => {
+            //   // Our bot did everything it has to do.
+            //   // Now it's waiting for further messages to proceed.
+            //   console.log('Waiting for next user messages');
 
               // Based on the session state, you might want to reset the session.
               // This depends heavily on the business logic of your bot.
@@ -206,12 +229,12 @@ app.post('/webhook', (req, res) => {
               // }
 
               // Updating the user's current session state
-              sessions[sessionId].context = context;
-            })
-            .catch((err) => {
-              console.error('Oops! Got an error from Wit: ', err.stack || err);
-            })
-          }
+          //     sessions[sessionId].context = context;
+          //   }
+          //   .catch((err) => {
+          //     console.error('Oops! Got an error from Wit: ', err.stack || err);
+          //   })
+          // })
         } else {
           console.log('received event', JSON.stringify(event));
         }
