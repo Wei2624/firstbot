@@ -1,20 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @Wei2624
- Watch 64
-  Star 823
- Fork 282 wit-ai/node-wit
- Code  Issues 33  Pull requests 7  Projects 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathnode-wit/examples/messenger.js
-84bc334  on Oct 12
-@tareshss tareshss Fix #64. Check for bot's message (#75)
-4 contributors @patapizza @martinraison @tareshss @keyvanakbary
-RawBlameHistory     
-256 lines (225 sloc)  7.97 KB
 'use strict';
 
 // Messenger API integration example
@@ -51,15 +34,15 @@ try {
 const PORT = process.env.PORT || 8445;
 
 // Wit.ai parameters
-const WIT_TOKEN = process.env.WIT_TOKEN;
+const WIT_TOKEN = "FLDETA4J4RPTS6LMQJCVFLCPHZEMTKBM";
 
 // Messenger API parameters
-const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
+const FB_PAGE_TOKEN = "EAATOwRMaZCVgBAOMsPvnTI2eAjtlxJT6EdGdlA8mBUmOckrYDKpcT0jb7v4E4eCJzTPy5VbBRvD2YpUUAT1npxfTM3YKyYOBrixF2bgzsFB9pMqGLZC0YY7gXzrXpyAYB7jHxqPDbPj32V0eVNsl9z6GcP55fyIYFMDZAZCjxwZDZD";
 if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
-const FB_APP_SECRET = process.env.FB_APP_SECRET;
+const FB_APP_SECRET = "fecaee66d79c7053dd2fca727489f94b";
 if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
 
-let FB_VERIFY_TOKEN = null;
+let FB_VERIFY_TOKEN = "my_voice_is_my_password_verify_me";
 crypto.randomBytes(8, (err, buff) => {
   if (err) throw err;
   FB_VERIFY_TOKEN = buff.toString('hex');
@@ -270,5 +253,3 @@ function verifyRequestSignature(req, res, buf) {
 
 app.listen(PORT);
 console.log('Listening on :' + PORT + '...');
-Contact GitHub API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Status Help
