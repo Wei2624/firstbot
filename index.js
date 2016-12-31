@@ -43,10 +43,10 @@ crypto.randomBytes(8, (err, buff) => {
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
 const fbMessage = (id, text) => {
-  const body = JSON.stringify({
+  const body = {
     recipient: { id },
     message: { text },
-  });
+  };
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
     method: 'POST',
@@ -142,19 +142,7 @@ const actions = {
           ]
         }
       }
-      context.options = {
-        "attachment":{
-          "type":"template",
-          "text":"The next time slot is: ",
-          "button":[
-            {
-              "type":"postback",
-              "title":"seize it!",
-              "payload":"seize_it"
-            }
-          ]
-        }
-      }; 
+      context.options = messages; 
     } 
     return context;
   },
