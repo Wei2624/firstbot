@@ -127,6 +127,7 @@ const actions = {
     }
   },
   optiongenerator({context, entities},{sessionId}) {
+    console.log(sessionId)
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
       const recipientId = sessions[sessionId].fbid;
