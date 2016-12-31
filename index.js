@@ -136,7 +136,7 @@ const actions = {
           "button":[
             {
               "type":"postback",
-              "title":"seize it!"
+              "title":"seize it!",
               "payload":"seize_it"
             }
           ]
