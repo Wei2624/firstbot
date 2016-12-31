@@ -127,14 +127,10 @@ const actions = {
     }
   },
   getForecast({context, entities}) {
-    var location = firstEntityValue(entities, 'location');
-    if (location) {
-      context.forecast = 'sunny in ' + location; // we should call a weather API here
-      delete context.missingLocation;
-    } else {
-      context.missingLocation = true;
-      delete context.forecast;
-    }
+    var user_intent = firstEntityValue(entities, 'intent');
+    if (user_intent.localeCompare('book')) {
+      context.forecast = 'you will have options here'; // we should call a weather API here
+    } 
     return context;
   },
   // You should implement your custom actions here
@@ -199,36 +195,36 @@ app.post('/webhook', (req, res) => {
             // We received a text message
 
 
-            wit.converse(sessionId, text, sessions[sessionId].context)
-              .then((data) => {
-              console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+              // wit.converse(sessionId, text, sessions[sessionId].context)
+              //   .then((data) => {
+              //   console.log('Yay, got Wit.ai response: ' + JSON.stringify(data));
+              //   })
+              //   .catch(console.error);
+
+              // Let's forward the message to the Wit.ai Bot Engine
+              // This will run all actions until our bot has nothing left to do
+              wit.runActions(
+                sessionId, // the user's current session
+                text, // the user's message
+                sessions[sessionId].context // the user's current session state
+              ).then((context) => {
+                // Our bot did everything it has to do.
+                // Now it's waiting for further messages to proceed.
+                console.log('Waiting for next user messages');
+
+                // Based on the session state, you might want to reset the session.
+                // This depends heavily on the business logic of your bot.
+                // Example:
+                // if (context['done']) {
+                //   delete sessions[sessionId];
+                // }
+
+                // Updating the user's current session state
+                sessions[sessionId].context = context;
               })
-              .catch(console.error);
-
-            // Let's forward the message to the Wit.ai Bot Engine
-            // This will run all actions until our bot has nothing left to do
-            // wit.runActions(
-            //   sessionId, // the user's current session
-            //   text, // the user's message
-            //   sessions[sessionId].context // the user's current session state
-            // ).then((context) => {
-            //   // Our bot did everything it has to do.
-            //   // Now it's waiting for further messages to proceed.
-            //   console.log('Waiting for next user messages');
-
-            //   // Based on the session state, you might want to reset the session.
-            //   // This depends heavily on the business logic of your bot.
-            //   // Example:
-            //   // if (context['done']) {
-            //   //   delete sessions[sessionId];
-            //   // }
-
-            //   // Updating the user's current session state
-            //   sessions[sessionId].context = context;
-            // })
-            // .catch((err) => {
-            //   console.error('Oops! Got an error from Wit: ', err.stack || err);
-            // })
+              .catch((err) => {
+                console.error('Oops! Got an error from Wit: ', err.stack || err);
+              })
           }
         } else {
           console.log('received event', JSON.stringify(event));
