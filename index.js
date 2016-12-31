@@ -142,7 +142,7 @@ const actions = {
           ]
         }
       }
-      context.options = message; 
+      context.options = JSON.parse(message); 
     } 
     return context;
   },
