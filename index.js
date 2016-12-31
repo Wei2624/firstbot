@@ -48,33 +48,18 @@ const fbMessage = (id, text) => {
     message: { text },
   });
   const qs_back = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-  return request({
-    url:'https://graph.facebook.com/v2.6/me/messages',
-    qs:{qs_back},
-    json:{
-      recipient:{id},
-      message:text,
+  return fetch('https://graph.facebook.com/me/messages?' + qs, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body,
+  })
+  .then(rsp => rsp.json())
+  .then(json => {
+    if (json.error && json.error.message) {
+      throw new Error(json.error.message);
     }
-  },function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    }
-  );
-  // return fetch('https://graph.facebook.com/me/messages?' + qs, {
-  //   method: 'POST',
-  //   headers: {'Content-Type': 'application/json'},
-  //   body,
-  // })
-  // .then(rsp => rsp.json())
-  // .then(json => {
-  //   if (json.error && json.error.message) {
-  //     throw new Error(json.error.message);
-  //   }
-  //   return json;
-  // });
+    return json;
+  });
 };
 
 
@@ -126,15 +111,15 @@ const actions = {
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
       return fbMessage(recipientId, text);
-      // .then(() => null)
-      // .catch((err) => {
-      //   console.error(
-      //     'Oops! An error occurred while forwarding the response to',
-      //     recipientId,
-      //     ':',
-      //     err.stack || err
-      //   );
-      // });
+      .then(() => null)
+      .catch((err) => {
+        console.error(
+          'Oops! An error occurred while forwarding the response to',
+          recipientId,
+          ':',
+          err.stack || err
+        );
+      });
     } else {
       console.error('Oops! Couldn\'t find user for session:', sessionId);
       // Giving the wheel back to our bot
@@ -144,22 +129,12 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      const messages = JSON.stringify({
-        "attachment":{
-          "type":"template",
-          "text":"The next time slot is: ",
-          "button":[
-            {
-              "type":"postback",
-              "title":"seize it!",
-              "payload":"seize_it"
-            }
-          ]
-        }
-      });
-      context.options = messages; 
-    } 
+      const recipientId = sessions[sessionId].fbid;
+      sendGenericMessage(recipientId);
+
+
     return context;
+  }
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
@@ -282,6 +257,69 @@ function verifyRequestSignature(req, res, buf) {
     }
   }
 }
+
+
+
+function sendGenericMessage(sender) {
+    let messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "First card",
+                    "subtitle": "Element #1 of an hscroll",
+                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [{
+                        "type": "web_url",
+                        "url": "https://www.messenger.com",
+                        "title": "web url"
+                    }, {
+                        "type": "postback",
+                        "title": "Postback",
+                        "payload": "Payload for first element in a generic bubble",
+                    }],
+                }, {
+                    "title": "Second card",
+                    "subtitle": "Element #2 of an hscroll",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Postback",
+                        "payload": "Payload for second element in a generic bubble",
+                    }],
+                }]
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:FB_PAGE_TOKEN},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.listen(PORT);
 console.log('Listening on :' + PORT + '...');
