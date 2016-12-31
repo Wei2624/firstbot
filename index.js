@@ -47,19 +47,34 @@ const fbMessage = (id, text) => {
     recipient: { id },
     message: { text },
   });
-  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-  return fetch('https://graph.facebook.com/me/messages?' + qs, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body,
-  })
-  .then(rsp => rsp.json())
-  .then(json => {
-    if (json.error && json.error.message) {
-      throw new Error(json.error.message);
+  const qs_back = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+  return request({
+    url:'https://graph.facebook.com/v2.6/me/messages',
+    qs:{qs_back},
+    json:{
+      recipient:{id},
+      message:text,
     }
-    return json;
-  });
+  },function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    }
+  )
+  // return fetch('https://graph.facebook.com/me/messages?' + qs, {
+  //   method: 'POST',
+  //   headers: {'Content-Type': 'application/json'},
+  //   body,
+  // })
+  // .then(rsp => rsp.json())
+  // .then(json => {
+  //   if (json.error && json.error.message) {
+  //     throw new Error(json.error.message);
+  //   }
+  //   return json;
+  // });
 };
 
 
