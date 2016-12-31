@@ -129,6 +129,7 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = firstEntityValue(entities, 'intent');
     if (user_intent.localeCompare('book')) {
+      console.log('this is in the option section')
       context.options = 'you will have options here'; // we should call a weather API here
     } 
     return context;
@@ -182,6 +183,7 @@ app.post('/webhook', (req, res) => {
           // We retrieve the user's current session, or create one if it doesn't exist
           // This is needed for our bot to figure out the conversation history
           const sessionId = findOrCreateSession(sender);
+          console.log(sender)
 
           // We retrieve the message content
           const {text, attachments} = event.message;
