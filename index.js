@@ -142,7 +142,19 @@ const actions = {
           ]
         }
       }
-      context.options = {"message":messages}; 
+      context.options = {
+        "attachment":{
+          "type":"template",
+          "text":"The next time slot is: ",
+          "button":[
+            {
+              "type":"postback",
+              "title":"seize it!",
+              "payload":"seize_it"
+            }
+          ]
+        }
+      }; 
     } 
     return context;
   },
