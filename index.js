@@ -129,7 +129,7 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      let message = {
+      let messages = {
         "attachment":{
           "type":"template",
           "text":"The next time slot is: ",
@@ -142,7 +142,7 @@ const actions = {
           ]
         }
       }
-      context.options = JSON.parse(message); 
+      context.options = {"message":messages}; 
     } 
     return context;
   },
