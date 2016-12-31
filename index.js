@@ -62,7 +62,13 @@ const fbMessage = (id, text) => {
             console.log('Error: ', response.body.error)
         }
     }
-  )
+  ).then(rsp => rsp.json())
+  .then(json => {
+    if (json.error && json.error.message) {
+      throw new Error(json.error.message);
+    }
+    return json;
+  });
   // return fetch('https://graph.facebook.com/me/messages?' + qs, {
   //   method: 'POST',
   //   headers: {'Content-Type': 'application/json'},
