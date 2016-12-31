@@ -126,7 +126,7 @@ const actions = {
       return Promise.resolve()
     }
   },
-  optiongenerator({context, entities}) {
+  optiongenerator({context, entities},{sessionId}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
       const recipientId = sessions[sessionId].fbid;
