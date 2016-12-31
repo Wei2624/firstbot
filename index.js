@@ -62,13 +62,7 @@ const fbMessage = (id, text) => {
             console.log('Error: ', response.body.error)
         }
     }
-  ).then(rsp => rsp.json())
-  .then(json => {
-    if (json.error && json.error.message) {
-      throw new Error(json.error.message);
-    }
-    return json;
-  });
+  );
   // return fetch('https://graph.facebook.com/me/messages?' + qs, {
   //   method: 'POST',
   //   headers: {'Content-Type': 'application/json'},
@@ -131,16 +125,16 @@ const actions = {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-      return fbMessage(recipientId, text)
-      .then(() => null)
-      .catch((err) => {
-        console.error(
-          'Oops! An error occurred while forwarding the response to',
-          recipientId,
-          ':',
-          err.stack || err
-        );
-      });
+      return fbMessage(recipientId, text);
+      // .then(() => null)
+      // .catch((err) => {
+      //   console.error(
+      //     'Oops! An error occurred while forwarding the response to',
+      //     recipientId,
+      //     ':',
+      //     err.stack || err
+      //   );
+      // });
     } else {
       console.error('Oops! Couldn\'t find user for session:', sessionId);
       // Giving the wheel back to our bot
