@@ -51,7 +51,8 @@ const fbMessage = (id, text) => {
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body,
+    recipient: { id },
+    message: { text },
   })
   .then(rsp => rsp.json())
   .then(json => {
