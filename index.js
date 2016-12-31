@@ -29,7 +29,7 @@ if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
 const FB_APP_SECRET = "fecaee66d79c7053dd2fca727489f94b";
 if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
 
-let FB_VERIFY_TOKEN = null;
+let FB_VERIFY_TOKEN = "my_voice_is_my_password_verify_me";
 crypto.randomBytes(8, (err, buff) => {
   if (err) throw err;
   FB_VERIFY_TOKEN = buff.toString('hex');
@@ -63,7 +63,7 @@ const fbMessage = (id, text) => {
 };
 
 
-const firstEntityValue = (entities, entity) => {
+const findEntityValue = (entities, entity) => {
   const val = entities && entities[entity] &&
     Array.isArray(entities[entity]) &&
     entities[entity].length > 0 &&
@@ -127,10 +127,22 @@ const actions = {
     }
   },
   optiongenerator({context, entities}) {
-    var user_intent = firstEntityValue(entities, 'intent');
-    console.log(user_intent)
+    var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      context.options = 'you will have options here'; // we should call a weather API here
+      let message = {
+        "attachment":{
+          "type":"template",
+          "text":"The next time slot is: ",
+          "button":[
+            {
+              "type":"postback",
+              "title":"seize it!"
+              "payload":"seize_it"
+            }
+          ]
+        }
+      }
+      context.options = message; 
     } 
     return context;
   },
@@ -183,7 +195,6 @@ app.post('/webhook', (req, res) => {
           // We retrieve the user's current session, or create one if it doesn't exist
           // This is needed for our bot to figure out the conversation history
           const sessionId = findOrCreateSession(sender);
-          console.log(sender)
 
           // We retrieve the message content
           const {text, attachments} = event.message;
@@ -237,20 +248,10 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 });
 
-/*
- * Verify that the callback came from Facebook. Using the App Secret from
- * the App Dashboard, we can verify the signature that is sent with each
- * callback in the x-hub-signature field, located in the header.
- *
- * https://developers.facebook.com/docs/graph-api/webhooks#setup
- *
- */
+
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
-
   if (!signature) {
-    // For testing, let's log an error. In production, you should throw an
-    // error.
     console.error("Couldn't validate the signature.");
   } else {
     var elements = signature.split('=');
