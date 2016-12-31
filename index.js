@@ -43,16 +43,15 @@ crypto.randomBytes(8, (err, buff) => {
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
 const fbMessage = (id, text) => {
-  const body = {
+  const body = JSON.stringify({
     recipient: { id },
     message: { text },
-  };
+  });
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    recipient: { id },
-    message: { text },
+    body,
   })
   .then(rsp => rsp.json())
   .then(json => {
@@ -111,7 +110,6 @@ const actions = {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-      console.log(text)
       return fbMessage(recipientId, text)
       .then(() => null)
       .catch((err) => {
@@ -144,7 +142,7 @@ const actions = {
           ]
         }
       }
-      context.options = messages; 
+      context.options = JSON.stringfy(messages); 
     } 
     return context;
   },
