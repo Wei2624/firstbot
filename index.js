@@ -126,10 +126,10 @@ const actions = {
       return Promise.resolve()
     }
   },
-  getForecast({context, entities}) {
+  optiongenerator({context, entities}) {
     var user_intent = firstEntityValue(entities, 'intent');
     if (user_intent.localeCompare('book')) {
-      context.forecast = 'you will have options here'; // we should call a weather API here
+      context.options = 'you will have options here'; // we should call a weather API here
     } 
     return context;
   },
