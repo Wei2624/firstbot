@@ -82,7 +82,7 @@ const findEntityValue = (entities, entity) => {
 // Each session has an entry:
 // sessionId -> {f};
 
-
+const sessions = {};
 
 const findOrCreateSession = (fbid) => {
   let sessionId;
