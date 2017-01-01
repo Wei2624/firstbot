@@ -130,8 +130,7 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      console.log(user_intent);
-      console.log(typeof context.options);
+      console.log(typeof context);
 
 
 
@@ -198,7 +197,6 @@ app.post('/webhook', (req, res) => {
             .catch(console.error);
           } else if (text) {
             // We received a text message
-            console.log(text);
 
               // wit.converse(sessionId, text, sessions[sessionId].context)
               //   .then((data) => {
