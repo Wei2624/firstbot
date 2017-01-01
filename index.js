@@ -140,9 +140,10 @@ const actions = {
           { type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
         ]
       };
+      const  txt = message_data.text;
       const payload = {
         template_type: 'button',
-        message_data.text
+        txt
       };
       console.log(typeof message_data.buttons);
 
