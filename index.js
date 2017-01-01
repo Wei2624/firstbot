@@ -144,7 +144,7 @@ const actions = {
         template_type: 'button',
         message_data.text
       };
-      console.log(typeof message.buttons);
+      console.log(typeof message_data.buttons);
 
 
     return context;
