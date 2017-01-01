@@ -140,7 +140,11 @@ const actions = {
           { type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
         ]
       };
-      console.log(message.text);
+      const payload = {
+        template_type: 'button',
+        message.text
+      };
+      console.log(typeof message.buttons);
 
 
     return context;
