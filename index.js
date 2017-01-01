@@ -130,6 +130,7 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
+      console.log(user_intent);
       console.log(typeof context.options);
 
 
