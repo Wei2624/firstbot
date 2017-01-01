@@ -265,12 +265,13 @@ function formatButtons(buttons) {
 }
 
 function makeTemplate(payload) {
-  return const message = {
+  const message = {
     attachment: {
       type: 'template',
       payload
     }
   };
+  return message;
 }
 
 
