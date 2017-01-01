@@ -80,8 +80,9 @@ const findEntityValue = (entities, entity) => {
 
 // This will contain all user sessions.
 // Each session has an entry:
-// sessionId -> {fbid: facebookUserId, context: sessionState}
-const sessions = {};
+// sessionId -> {f};
+
+
 
 const findOrCreateSession = (fbid) => {
   let sessionId;
@@ -126,16 +127,15 @@ const actions = {
       return Promise.resolve()
     }
   },
-  optiongenerator({context, entities},{sessionId}) {
-    console.log(sessionId);
+  optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      const recipientId = sessions[sessionId].fbid;
-      sendGenericMessage(recipientId);
+      console.log(typeof context.options);
+
 
 
     return context;
-  }
+    }
   },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
@@ -258,66 +258,6 @@ function verifyRequestSignature(req, res, buf) {
     }
   }
 }
-
-
-
-function sendGenericMessage(sender) {
-    let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "First card",
-                    "subtitle": "Element #1 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                    "buttons": [{
-                        "type": "web_url",
-                        "url": "https://www.messenger.com",
-                        "title": "web url"
-                    }, {
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for first element in a generic bubble",
-                    }],
-                }, {
-                    "title": "Second card",
-                    "subtitle": "Element #2 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for second element in a generic bubble",
-                    }],
-                }]
-            }
-        }
-    }
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token:FB_PAGE_TOKEN},
-        method: 'POST',
-        json: {
-            recipient: {id:sender},
-            message: messageData,
-        }
-    }, function(error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error)
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error)
-        }
-    })
-}
-
-
-
-
-
-
-
-
-
 
 
 
