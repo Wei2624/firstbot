@@ -132,7 +132,7 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      var message = {
+      var message_data = {
         text: 'Favorite color?',
         buttons: [
           { type: 'postback', title: 'Red', payload: 'FAVORITE_RED' },
@@ -142,7 +142,7 @@ const actions = {
       };
       const payload = {
         template_type: 'button',
-        message.text
+        message_data.text
       };
       console.log(typeof message.buttons);
 
