@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
+const normalizeString = require('./normalize-string');
 
 let Wit = null;
 let log = null;
@@ -103,6 +104,8 @@ const findOrCreateSession = (fbid) => {
 
 
 
+
+
 // Our bot actions
 const actions = {
   send({sessionId}, {text}) {
@@ -132,7 +135,7 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      var message_data = {
+      var message = {
         text: 'Favorite color?',
         buttons: [
           { type: 'postback', title: 'Red', payload: 'FAVORITE_RED' },
@@ -140,13 +143,7 @@ const actions = {
           { type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
         ]
       };
-      const  txt = message_data.text;
-      const payload = {
-        template_type: 'button',
-        txt
-      };
-      console.log(typeof message_data.buttons);
-
+      context.options = buttonGenerator(message.text,message.buttons);
 
     return context;
     }
@@ -252,6 +249,40 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 });
 
+function formatButtons(buttons) {
+  return buttons && buttons.map((button) => {
+    if (typeof button === 'string') {
+      return {
+        type: 'postback',
+        title: button,
+        payload: 'BOOTBOT_BUTTON_' + normalizeString(button)
+      };
+    } else if (button && button.title) {
+      return button;
+    }
+    return {};
+  });
+}
+
+makeTemplate(payload) {
+  return const message = {
+    attachment: {
+      type: 'template',
+      payload
+    }
+  };
+}
+
+
+function buttonGenerator(text,buttons){
+  const payload = {
+    template_type: 'button',
+    text
+  };
+  const formattedButtons = formatButtons(buttons);
+  payload.buttons = formattedButtons;
+  return makeTemplate(payload);
+}
 
 function verifyRequestSignature(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
@@ -272,8 +303,6 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
-
-
-
 app.listen(PORT);
 console.log('Listening on :' + PORT + '...');
+
