@@ -264,7 +264,7 @@ function formatButtons(buttons) {
   });
 }
 
-makeTemplate(payload) {
+function makeTemplate(payload) {
   return const message = {
     attachment: {
       type: 'template',
