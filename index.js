@@ -101,6 +101,8 @@ const findOrCreateSession = (fbid) => {
   return sessionId;
 };
 
+
+
 // Our bot actions
 const actions = {
   send({sessionId}, {text}) {
@@ -130,8 +132,15 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
-      console.log(typeof context);
-
+      var message = {
+        text: 'Favorite color?',
+        buttons: [
+          { type: 'postback', title: 'Red', payload: 'FAVORITE_RED' },
+          { type: 'postback', title: 'Blue', payload: 'FAVORITE_BLUE' },
+          { type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
+        ]
+      };
+      console.log(message.text);
 
 
     return context;
