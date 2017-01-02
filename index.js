@@ -102,7 +102,24 @@ const findOrCreateSession = (fbid) => {
   return sessionId;
 };
 
-
+function sendTextMessage(sender, text) {
+    let messageData = { text:text }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:FB_PAGE_TOKEN},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
 
 
 
@@ -113,19 +130,23 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
     if (recipientId) {
+      console.log("the below is for text");
+      console.log(typeof text);
+      sendTextMessage(recipientId,text);
+
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-      return fbMessage(recipientId, text)
-      .then(() => null)
-      .catch((err) => {
-        console.error(
-          'Oops! An error occurred while forwarding the response to',
-          recipientId,
-          ':',
-          err.stack || err
-        );
-      });
+      // return fbMessage(recipientId, text)
+      // .then(() => null)
+      // .catch((err) => {
+      //   console.error(
+      //     'Oops! An error occurred while forwarding the response to',
+      //     recipientId,
+      //     ':',
+      //     err.stack || err
+      //   );
+      // });
     } else {
       console.error('Oops! Couldn\'t find user for session:', sessionId);
       // Giving the wheel back to our bot
@@ -144,7 +165,7 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      context.options = JSON.stringify(output);
+      context.options = output;
       console.log(typeof context.options);
 
 
