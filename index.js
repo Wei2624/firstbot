@@ -143,7 +143,9 @@ const actions = {
           { type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
         ]
       };
-      context.options = buttonGenerator(message.text,message.buttons);
+      var output = buttonGenerator(message.text,message.buttons);
+      console.log(typeof output);
+      context.options = "";
 
     return context;
     }
