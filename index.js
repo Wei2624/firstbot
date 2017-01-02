@@ -153,7 +153,7 @@ const actions = {
       return Promise.resolve()
     }
   },
-  optiongenerator({context, entities}) {
+  optiongenerator({context, entities.sessionId}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
       var message = {
@@ -166,6 +166,8 @@ const actions = {
       };
       var output = buttonGenerator(message.text,message.buttons);
       context.options = output;
+      const recipientId = sessions[sessionId].fbid;
+      sendTextMessage(recipientId,output);
 
 
     return context;
@@ -242,11 +244,10 @@ app.post('/webhook', (req, res) => {
               ]
             };
             var output = buttonGenerator(message.text,message.buttons);
-            console.log(typeof output);
 
 
 
-            sendTextMessage(sender,output);
+            //sendTextMessage(sender,output);
 
 
             // We received a text message
