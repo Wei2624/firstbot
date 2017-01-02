@@ -144,8 +144,9 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      console.log(typeof output);
-      context.options = "";
+      context.options = output;
+      console.log(typeof context.options);
+
 
     return context;
     }
