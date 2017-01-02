@@ -144,7 +144,7 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      context.options = output;
+      context.options = JSON.stringify(output);
       console.log(typeof context.options);
 
 
