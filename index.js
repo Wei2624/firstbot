@@ -110,7 +110,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: JSON.stringify(messageData),
+            message: text,
         }
     }, function(error, response, body) {
         if (error) {
