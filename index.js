@@ -242,7 +242,7 @@ app.post('/webhook', (req, res) => {
               ]
             };
             var output = buttonGenerator(message.text,message.buttons);
-            sendTextMessage(sender,output);
+            sendTextMessage(sender,"otuput");
 
 
             // We received a text message
