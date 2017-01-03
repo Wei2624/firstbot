@@ -45,7 +45,7 @@ crypto.randomBytes(8, (err, buff) => {
 
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
-    recipient: { id },
+    recipient:  id ,
     message:  text ,
   });
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
@@ -130,8 +130,6 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
     if (recipientId) {
-      console.log("the below is for text");
-      console.log(typeof text);
       sendTextMessage(recipientId,text);
 
       // Yay, we found our recipient!
