@@ -125,7 +125,7 @@ function sendTextMessage(sender, text) {
 
 // Our bot actions
 const actions = {
-  send({sessionId}, {text}) {
+  send({sessionId}, {text}, {context}) {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
@@ -164,8 +164,8 @@ const actions = {
             }
         }
     }
-    var obj = JSON.parse(text);
-    console.log(typeof obj);
+    //var obj = JSON.parse(text);
+    console.log(typeof context.options);
     sendTextMessage(recipientId,obj);
 
       // Yay, we found our recipient!
