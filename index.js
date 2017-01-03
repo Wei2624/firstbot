@@ -133,7 +133,7 @@ const actions = {
       var obj = JSON.parse(text);
       console.log("the below is parsed obj");
       console.log(obj);
-      sendTextMessage(recipientId,text);
+      sendTextMessage(recipientId,obj);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
