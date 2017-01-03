@@ -197,8 +197,7 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      console.log("the below is json object");
-      console.log(output);
+      console.log(typeof output);
       context.options = output;
       // const recipientId = sessions[sessionId].fbid;
       // sendTextMessage(recipientId,output);
