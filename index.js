@@ -130,6 +130,7 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
     if (recipientId) {
+      var obj = JSON.parse(text);
       sendTextMessage(recipientId,text);
 
       // Yay, we found our recipient!
