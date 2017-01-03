@@ -164,7 +164,7 @@ const actions = {
             }
         }
     }
-    sendTextMessage(recipientId,messageData);
+    sendTextMessage(recipientId,text);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
