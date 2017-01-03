@@ -110,7 +110,7 @@ function sendTextMessage(sender, text) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: text,
+            message: messageData,
         }
     }, function(error, response, body) {
         if (error) {
