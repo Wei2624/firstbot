@@ -131,6 +131,8 @@ const actions = {
     const recipientId = sessions[sessionId].fbid;
     if (recipientId) {
       var obj = JSON.parse(text);
+      console.log("the below is parsed obj");
+      console.log(obj);
       sendTextMessage(recipientId,text);
 
       // Yay, we found our recipient!
@@ -164,6 +166,8 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
+      console.log("the below is json object");
+      console.log(output);
       context.options = output;
       // const recipientId = sessions[sessionId].fbid;
       // sendTextMessage(recipientId,output);
