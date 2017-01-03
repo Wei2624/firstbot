@@ -133,10 +133,11 @@ const actions = {
       // var obj = JSON.parse(text);
       // console.log("the below is parsed obj");
       // console.log(obj);
+      console.log(text)
 
-    let messageData ='{\"attachment\": {\"type\":\"template\",\"payload\":{\"template_type\":\"generic\",\"elements\":[{\"title\":\"second card\",\"image_url\":\"http://messengerdemo.parseapp.com/img/gearvr.png\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Postback\",\"payload\":\"your payload\",}'
-    var obj = JSON.parse(messageData);
-    sendTextMessage(recipientId,obj);
+    // let messageData ='{\"attachment\": {\"type\":\"template\",\"payload\":{\"template_type\":\"generic\",\"elements\":[{\"title\":\"second card\",\"image_url\":\"http://messengerdemo.parseapp.com/img/gearvr.png\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Postback\",\"payload\":\"your payload\",}],}]}}}'
+    // var obj = JSON.parse(messageData);
+    // sendTextMessage(recipientId,obj);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
