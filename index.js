@@ -134,7 +134,7 @@ const actions = {
       // console.log("the below is parsed obj");
       // console.log(obj);
 
-    let messageData ='{\"attachment\": {\"type\":\"template\",\"payload\":{\"template_type\":\"generic\",\"elements\":[{\"title\":\"second card\",\"image_url\":\"http://messengerdemo.parseapp.com/img/gearvr.png\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Postback\",\"payload\":\"your payload\",],]'
+    let messageData ='{\"attachment\": {\"type\":\"template\",\"payload\":{\"template_type\":\"generic\",\"elements\":[{\"title\":\"second card\",\"image_url\":\"http://messengerdemo.parseapp.com/img/gearvr.png\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Postback\",\"payload\":\"your payload\",'
     var obj = JSON.parse(messageData);
     sendTextMessage(recipientId,obj);
 
