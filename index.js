@@ -125,7 +125,7 @@ function sendTextMessage(sender, text) {
 
 // Our bot actions
 const actions = {
-  send({sessionId}, {text}, {context}) {
+  send({sessionId}, {text}) {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
@@ -133,39 +133,8 @@ const actions = {
       // var obj = JSON.parse(text);
       // console.log("the below is parsed obj");
       // console.log(obj);
-      let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "First card",
-                    "subtitle": "Element #1 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                    "buttons": [{
-                        "type": "web_url",
-                        "url": "https://www.messenger.com",
-                        "title": "web url"
-                    }, {
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for first element in a generic bubble",
-                    }],
-                }, {
-                    "title": "Second card",
-                    "subtitle": "Element #2 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-                    "buttons": [{
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for second element in a generic bubble",
-                    }],
-                }]
-            }
-        }
-    }
-    //var obj = JSON.parse(text);
-    console.log(typeof context.options);
+    let messageData = '{"attachment": {"type": "template","payload": {"template_type": "generic","elements": [{"title": "First card","subtitle": "Element #1 of an hscroll","image_url": "http://messengerdemo.parseapp.com/img/rift.png","buttons": [{"type": "web_url","url": "https://www.messenger.com","title": "web url"}, {"type": "postback","title": "Postback","payload": "Payload for first element in a generic bubble",}],}, {"title": "Second card","subtitle": "Element #2 of an hscroll","image_url": "http://messengerdemo.parseapp.com/img/gearvr.png","buttons": [{"type": "postback","title": "Postback","payload": "Payload for second element in a generic bubble",}],}]}}}’
+    var obj = JSON.parse(messageData);
     sendTextMessage(recipientId,obj);
 
       // Yay, we found our recipient!
