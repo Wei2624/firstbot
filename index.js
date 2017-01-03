@@ -134,7 +134,7 @@ const actions = {
       // console.log("the below is parsed obj");
       // console.log(obj);
 
-    let messageData ='{"text": "Favorite color?","buttons": [{ "type": "postback", "title": "Red", "payload": "FAVORITE_RED" },{ "type": "postback", "title": "Blue", "payload": "FAVORITE_BLUE" },{ "type": "postback", "title": "Green", "payload": "FAVORITE_GREEN" }]}'
+    let messageData ='{"text": "Favorite color?"}'
     var obj = JSON.parse(messageData);
     sendTextMessage(recipientId,obj);
 
