@@ -125,7 +125,7 @@ function sendTextMessage(sender, text) {
 
 // Our bot actions
 const actions = {
-  send({sessionId}, {context}) {
+  send({sessionId}, {text}) {
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
@@ -133,7 +133,7 @@ const actions = {
       // var obj = JSON.parse(text);
       // console.log("the below is parsed obj");
       // console.log(obj);
-      console.log(typeof context)
+      console.log(text);
 
     // let messageData ='{\"attachment\": {\"type\":\"template\",\"payload\":{\"template_type\":\"generic\",\"elements\":[{\"title\":\"second card\",\"image_url\":\"http://messengerdemo.parseapp.com/img/gearvr.png\",\"buttons\":[{\"type\":\"postback\",\"title\":\"Postback\",\"payload\":\"your payload\",}],}]}}}'
     // var obj = JSON.parse(messageData);
