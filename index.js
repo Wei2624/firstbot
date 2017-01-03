@@ -133,7 +133,8 @@ const actions = {
       // var obj = JSON.parse(text);
       // console.log("the below is parsed obj");
       // console.log(obj);
-      console.log(text);
+      let messageData =  '"buttons":[{"type":"postback","title":"Bookmark Item","payload":"DEVELOPER_DEFINED_PAYLOAD"}]';
+      var obj = JSON.parse(messageData);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
@@ -166,7 +167,7 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      context.options.buttons = output;
+      context.options = output;
       // const recipientId = sessions[sessionId].fbid;
       // sendTextMessage(recipientId,output);
 
