@@ -166,7 +166,7 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      context.options.json = output;
+      context.options.buttons = output;
       // const recipientId = sessions[sessionId].fbid;
       // sendTextMessage(recipientId,output);
 
