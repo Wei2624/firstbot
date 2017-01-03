@@ -130,9 +130,9 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
     if (recipientId) {
-      var obj = JSON.parse(text);
-      console.log("the below is parsed obj");
-      console.log(obj);
+      // var obj = JSON.parse(text);
+      // console.log("the below is parsed obj");
+      // console.log(obj);
       let messageData = {
         "attachment": {
             "type": "template",
@@ -164,7 +164,7 @@ const actions = {
             }
         }
     }
-      sendTextMessage(recipientId,messageData);
+    sendTextMessage(recipientId,messageData);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
