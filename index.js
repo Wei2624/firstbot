@@ -164,6 +164,7 @@ const actions = {
             }
         }
     }
+    console.log(typeof messageData);
     sendTextMessage(recipientId,text);
 
       // Yay, we found our recipient!
@@ -197,7 +198,6 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      console.log(typeof output);
       context.options = output;
       // const recipientId = sessions[sessionId].fbid;
       // sendTextMessage(recipientId,output);
