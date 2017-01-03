@@ -46,7 +46,7 @@ crypto.randomBytes(8, (err, buff) => {
 const fbMessage = (id, text) => {
   const body = JSON.stringify({
     recipient: { id },
-    message: { text },
+    message:  text ,
   });
   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
   return fetch('https://graph.facebook.com/me/messages?' + qs, {
@@ -137,16 +137,16 @@ const actions = {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-      // return fbMessage(recipientId, text)
-      // .then(() => null)
-      // .catch((err) => {
-      //   console.error(
-      //     'Oops! An error occurred while forwarding the response to',
-      //     recipientId,
-      //     ':',
-      //     err.stack || err
-      //   );
-      // });
+      return fbMessage(recipientId, text)
+      .then(() => null)
+      .catch((err) => {
+        console.error(
+          'Oops! An error occurred while forwarding the response to',
+          recipientId,
+          ':',
+          err.stack || err
+        );
+      });
     } else {
       console.error('Oops! Couldn\'t find user for session:', sessionId);
       // Giving the wheel back to our bot
@@ -166,8 +166,8 @@ const actions = {
       };
       var output = buttonGenerator(message.text,message.buttons);
       context.options = output;
-      const recipientId = sessions[sessionId].fbid;
-      sendTextMessage(recipientId,output);
+      // const recipientId = sessions[sessionId].fbid;
+      // sendTextMessage(recipientId,output);
 
 
     return context;
