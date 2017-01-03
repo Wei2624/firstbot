@@ -134,7 +134,7 @@ const actions = {
       // console.log("the below is parsed obj");
       // console.log(obj);
 
-    let messageData = '{"attachment": {"type": "template","payload": {"template_type": "generic","elements": [{"title": "First card","subtitle": "Element #1 of an hscroll","image_url": "http://messengerdemo.parseapp.com/img/rift.png","buttons": [{"type": "web_url","url": "https://www.messenger.com","title": "web url"}, {"type": "postback","title": "Postback","payload": "Payload for first element in a generic bubble",}],}, {"title": "Second card","subtitle": "Element #2 of an hscroll","image_url": "http://messengerdemo.parseapp.com/img/gearvr.png","buttons": [{"type": "postback","title": "Postback","payload": "Payload for second element in a generic bubble",}],}]}}}';
+    let messageData ='{text: 'Favorite color?',buttons: [{ type: 'postback', title: 'Red', payload: 'FAVORITE_RED' },{ type: 'postback', title: 'Blue', payload: 'FAVORITE_BLUE' },{ type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }]}'
     var obj = JSON.parse(messageData);
     sendTextMessage(recipientId,obj);
 
@@ -236,23 +236,6 @@ app.post('/webhook', (req, res) => {
             fbMessage(sender, 'Sorry I can only process text messages for now.')
             .catch(console.error);
           } else if (text) {
-
-
-
-            var message = {
-              text: 'Favorite color?',
-              buttons: [
-                { type: 'postback', title: 'Red', payload: 'FAVORITE_RED' },
-                { type: 'postback', title: 'Blue', payload: 'FAVORITE_BLUE' },
-                { type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
-              ]
-            };
-            var output = buttonGenerator(message.text,message.buttons);
-
-
-
-            //sendTextMessage(sender,output);
-
 
             // We received a text message
 
