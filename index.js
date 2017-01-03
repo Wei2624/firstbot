@@ -164,8 +164,9 @@ const actions = {
             }
         }
     }
-    console.log(typeof messageData);
-    sendTextMessage(recipientId,text);
+    var obj = JSON.stringify(text);
+    console.log(typeof obj);
+    sendTextMessage(recipientId,obj);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
