@@ -156,7 +156,6 @@ const actions = {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'start') {
       var output = {
-        "message":{
           "text":"Pick a color:",
           "quick_replies":[
             {
@@ -170,7 +169,6 @@ const actions = {
               "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
             }
           ]
-        }
       }
       // var output = {
       //   text: 'Favorite color?',
