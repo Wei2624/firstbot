@@ -159,9 +159,9 @@ const actions = {
         "attachment":{
           "type": "template",
           "payload":{
-            "template_type": "quick_replies",
+            "template_type": "quickReply",
             "text": "Pcik a color",
-            "quick_replies":[
+            "quickReplies":[
               { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
               { type: 'postback', title: 'Book Another Reservation', payload: 'FAVORITE_BLUE' },
               { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' }
