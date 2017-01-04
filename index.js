@@ -274,6 +274,7 @@ app.post('/webhook', (req, res) => {
   if (data.object === 'page') {
     data.entry.forEach(entry => {
       entry.messaging.forEach(event => {
+        conole.log(JSON.stringify(event));
         if (event.message && !event.message.is_echo) {
           // Yay! We got a new message!
           // We retrieve the Facebook user ID of the sender
