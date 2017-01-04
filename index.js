@@ -130,11 +130,12 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
     if (recipientId) {
+      console.log(text);
       // var obj = JSON.parse(text);
       // console.log("the below is parsed obj");
       // console.log(obj);
-      let messageData = '{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"First card","subtitle":"Element #1 of an hscroll","image_url":"http://messengerdemo.parseapp.com/img/rift.png","buttons":[{"type":"web_url","url":"https://www.messenger.com","title":"web url"},{"type":"postback","title":"Postback","payload":"Payload for first element in a generic bubble"}]},{"title":"Second card","subtitle":"Element #2 of an hscroll","image_url":"http://messengerdemo.parseapp.com/img/gearvr.png","buttons":[{"type":"postback","title":"Postback","payload":"Payload for second element in a generic bubble"}]}]}}}'
-      var obj = JSON.parse(messageData);
+      //let messageData = '{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"First card","subtitle":"Element #1 of an hscroll","image_url":"http://messengerdemo.parseapp.com/img/rift.png","buttons":[{"type":"web_url","url":"https://www.messenger.com","title":"web url"},{"type":"postback","title":"Postback","payload":"Payload for first element in a generic bubble"}]},{"title":"Second card","subtitle":"Element #2 of an hscroll","image_url":"http://messengerdemo.parseapp.com/img/gearvr.png","buttons":[{"type":"postback","title":"Postback","payload":"Payload for second element in a generic bubble"}]}]}}}'
+      //var obj = JSON.parse(messageData);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
@@ -167,7 +168,7 @@ const actions = {
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
-      context.options = output;
+      context.options = JSON.stringify(output);
       // const recipientId = sessions[sessionId].fbid;
       // sendTextMessage(recipientId,output);
 
