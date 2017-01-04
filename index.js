@@ -274,7 +274,7 @@ app.post('/webhook', (req, res) => {
   if (data.object === 'page') {
     data.entry.forEach(entry => {
       entry.messaging.forEach(event => {
-        conole.log(JSON.stringify(event));
+        console.log(JSON.stringify(event));
         if (event.message && !event.message.is_echo) {
           // Yay! We got a new message!
           // We retrieve the Facebook user ID of the sender
@@ -327,7 +327,7 @@ app.post('/webhook', (req, res) => {
                 console.error('Oops! Got an error from Wit: ', err.stack || err);
               })
           }
-        } else if(typeof event.postback !== 'undefined') {
+        } else if(typeof event.postback.payload !== 'undefined') {
           console.log(event.postback.payload);
         } else {
           console.log('received event', JSON.stringify(event));
