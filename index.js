@@ -160,11 +160,11 @@ const actions = {
         buttons: [
           { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
           { type: 'postback', title: 'Book Another Reservation', payload: 'FAVORITE_BLUE' },
-          { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' },
-          { type: 'postback', title: 'Get Direction', payload: 'FAVORITE' }
+          { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' }
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
+      console.log(JSON.stringify(output));
       context.options = JSON.stringify(output);
       // const recipientId = sessions[sessionId].fbid;
       // sendTextMessage(recipientId,output);
