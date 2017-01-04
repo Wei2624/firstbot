@@ -102,7 +102,7 @@ const findOrCreateSession = (fbid) => {
   return sessionId;
 };
 
-function sendfbMessage(sender, data) {
+function sendfbMessage(sender, text) {
     let messageData = { text:text }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -110,7 +110,7 @@ function sendfbMessage(sender, data) {
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: data,
+            message: text,
         }
     }, function(error, response, body) {
         if (error) {
