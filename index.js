@@ -230,6 +230,9 @@ const actions = {
     return context;
     }
   },
+  seizecloesttime({context,entities}){
+    console.log("you did it!");
+  },
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
 };
@@ -282,7 +285,6 @@ app.post('/webhook', (req, res) => {
 
           // We retrieve the message content
           const {text, attachments} = event.message;
-          console.log(text);
 
           if (attachments) {
             // We received an attachment
@@ -324,6 +326,8 @@ app.post('/webhook', (req, res) => {
                 console.error('Oops! Got an error from Wit: ', err.stack || err);
               })
           }
+        } else if(event.postback.payload) {
+          console.log(event.postback.payload);
         } else {
           console.log('received event', JSON.stringify(event));
         }
