@@ -159,16 +159,43 @@ const actions = {
       "attachment":{
         "type":"template",
         "payload":{
-          "template_type":"button",
+          "template_type":"generic",
           "text":"Favorite color?",
-          "buttons":[
-            {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
-            {"type":"postback","title":"Book Another \'\n\' Resveration","payload":"FAVORITE_BLUE"},
-            {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
+          "elements":[
+            {
+              "title":"Which one you are going to choose?",
+              "buttons":[
+                {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
+                {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
+                {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
+              ]
+            }
+            {
+              "buttons":[
+                {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
+                {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
+                {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
+              ]
+            }
+
             ]
           }
         }
       }
+    // var output = {
+    //   "attachment":{
+    //     "type":"template",
+    //     "payload":{
+    //       "template_type":"button",
+    //       "text":"Favorite color?",
+    //       "buttons":[
+    //         {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
+    //         {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
+    //         {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
+    //         ]
+    //       }
+    //     }
+    //   }
       // var output = {
       //   "text":"Pick a color:",
       //   "quick_replies":[
