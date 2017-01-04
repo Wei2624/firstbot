@@ -160,7 +160,6 @@ const actions = {
         "type":"template",
         "payload":{
           "template_type":"generic",
-          "text":"Favorite color?",
           "elements":[
             {
               "title":"Which one you are going to choose?",
