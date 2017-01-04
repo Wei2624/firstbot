@@ -327,7 +327,7 @@ app.post('/webhook', (req, res) => {
                 console.error('Oops! Got an error from Wit: ', err.stack || err);
               })
           }
-        } else if(event.postback.payload) {
+        } else if(typeof event.postback.payload !== 'undefined') {
           console.log(event.postback.payload);
         } else {
           console.log('received event', JSON.stringify(event));
