@@ -156,18 +156,20 @@ const actions = {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'start') {
       var output = {
-        "attachment":{
-          "type": "template",
-          "payload":{
-            "template_type": "quickReply",
-            "text": "Pcik a color",
-            "quickReplies":[
-              { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
-              { type: 'postback', title: 'Book Another Reservation', payload: 'FAVORITE_BLUE' },
-              { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' }
-            ]
-
-          }
+        "message":{
+          "text":"Pick a color:",
+          "quick_replies":[
+            {
+              "content_type":"text",
+              "title":"Red",
+              "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+            },
+            {
+              "content_type":"text",
+              "title":"Green",
+              "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+            }
+          ]
         }
       }
       // var output = {
