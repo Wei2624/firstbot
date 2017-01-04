@@ -171,6 +171,7 @@ const actions = {
               ]
             },
             {
+              "title":"Which one you are going to choose?",
               "buttons":[
                 {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
                 {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
