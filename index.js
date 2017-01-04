@@ -163,7 +163,7 @@ const actions = {
           "text":"Favorite color?",
           "buttons":[
             {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
-            {"type":"postback","title":"Book Another '\n' Resveration","payload":"FAVORITE_BLUE"},
+            {"type":"postback","title":"Book Another \'\n\' Resveration","payload":"FAVORITE_BLUE"},
             {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
             ]
           }
