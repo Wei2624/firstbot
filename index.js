@@ -102,15 +102,14 @@ const findOrCreateSession = (fbid) => {
   return sessionId;
 };
 
-function sendTextMessage(sender, text) {
-    let messageData = { text:text }
+function sendfbMessage(sender, data) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:FB_PAGE_TOKEN},
         method: 'POST',
         json: {
             recipient: {id:sender},
-            message: text,
+            message: data,
         }
     }, function(error, response, body) {
         if (error) {
@@ -132,11 +131,7 @@ const actions = {
     if (recipientId) {
       console.log(text);
       var obj = JSON.parse(text);
-      sendTextMessage(recipientId,obj);
-      // console.log("the below is parsed obj");
-      // console.log(obj);
-      //let messageData = '{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"First card","subtitle":"Element #1 of an hscroll","image_url":"http://messengerdemo.parseapp.com/img/rift.png","buttons":[{"type":"web_url","url":"https://www.messenger.com","title":"web url"},{"type":"postback","title":"Postback","payload":"Payload for first element in a generic bubble"}]},{"title":"Second card","subtitle":"Element #2 of an hscroll","image_url":"http://messengerdemo.parseapp.com/img/gearvr.png","buttons":[{"type":"postback","title":"Postback","payload":"Payload for second element in a generic bubble"}]}]}}}'
-      //var obj = JSON.parse(messageData);
+      sendfbMessage(recipientId,obj);
 
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
@@ -157,15 +152,17 @@ const actions = {
       return Promise.resolve()
     }
   },
-  optiongenerator({context, entities, sessionId}) {
+  optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'book') {
       var message = {
+
         text: 'Favorite color?',
         buttons: [
-          { type: 'postback', title: 'Red', payload: 'FAVORITE_RED' },
-          { type: 'postback', title: 'Blue', payload: 'FAVORITE_BLUE' },
-          { type: 'postback', title: 'Green', payload: 'FAVORITE_GREEN' }
+          { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
+          { type: 'postback', title: 'Book Another Reservation', payload: 'FAVORITE_BLUE' },
+          { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' },
+          { type: 'postback', title: 'Get Direction', payload: 'FAVORITE_GREEN' }
         ]
       };
       var output = buttonGenerator(message.text,message.buttons);
@@ -229,6 +226,7 @@ app.post('/webhook', (req, res) => {
 
           // We retrieve the message content
           const {text, attachments} = event.message;
+          console.log(text);
 
           if (attachments) {
             // We received an attachment
