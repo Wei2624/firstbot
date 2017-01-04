@@ -103,6 +103,7 @@ const findOrCreateSession = (fbid) => {
 };
 
 function sendfbMessage(sender, data) {
+    let messageData = { text:text }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:FB_PAGE_TOKEN},
@@ -129,7 +130,6 @@ const actions = {
     // Let's retrieve the Facebook user whose session belongs to
     const recipientId = sessions[sessionId].fbid;
     if (recipientId) {
-      console.log(text);
       var obj = JSON.parse(text);
       sendfbMessage(recipientId,obj);
 
