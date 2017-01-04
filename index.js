@@ -155,33 +155,33 @@ const actions = {
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
     if (user_intent == 'start') {
-    var output = {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"generic",
-          "elements":[
-            {
-              "title":"Which one you are going to choose?",
-              "buttons":[
-                {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
-                {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
-                {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
-              ]
-            },
-            {
-              "title":"Which one you are going to choose?",
-              "buttons":[
-                {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
-                {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
-                {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
-              ]
-            }
+    // var output = {
+    //   "attachment":{
+    //     "type":"template",
+    //     "payload":{
+    //       "template_type":"generic",
+    //       "elements":[
+    //         {
+    //           "title":"Which one you are going to choose?",
+    //           "buttons":[
+    //             {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
+    //             {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
+    //             {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
+    //           ]
+    //         },
+    //         {
+    //           "title":"Which one you are going to choose?",
+    //           "buttons":[
+    //             {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
+    //             {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
+    //             {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
+    //           ]
+    //         }
 
-            ]
-          }
-        }
-      }
+    //         ]
+    //       }
+    //     }
+    //   }
     // var output = {
     //   "attachment":{
     //     "type":"template",
@@ -196,31 +196,31 @@ const actions = {
     //       }
     //     }
     //   }
-      // var output = {
-      //   "text":"Pick a color:",
-      //   "quick_replies":[
-      //     {
-      //       "content_type":"text",
-      //       "title":"Seize it!",
-      //       "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
-      //     },
-      //     {
-      //       "content_type":"text",
-      //       "title":"Book Another Resveration",
-      //       "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
-      //     },
-      //     {
-      //       "content_type":"text",
-      //       "title":"Cancel A Resveration",
-      //       "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN1"
-      //     },
-      //     {
-      //       "content_type":"text",
-      //       "title":"Get Direction",
-      //       "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN2"
-      //     }
-      //   ]
-      // }
+      var output = {
+        "text":"Pick a color:",
+        "quick_replies":[
+          {
+            "content_type":"text",
+            "title":"Seize it!",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+          },
+          {
+            "content_type":"text",
+            "title":"Book Another Resveration",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+          },
+          {
+            "content_type":"text",
+            "title":"Cancel A Resveration",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN1"
+          },
+          {
+            "content_type":"text",
+            "title":"Get Direction",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN2"
+          }
+        ]
+      }
       console.log(JSON.stringify(output));
       context.options = JSON.stringify(output);
       // const recipientId = sessions[sessionId].fbid;
