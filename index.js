@@ -169,7 +169,7 @@ const actions = {
                 {"type":"postback","title":"Book Another Resveration","payload":"FAVORITE_BLUE"},
                 {"type":"postback","title":"Green","payload":"FAVORITE_GREEN"}
               ]
-            }
+            },
             {
               "buttons":[
                 {"type":"postback","title":"Seize it!","payload":"FAVORITE_RED"},
