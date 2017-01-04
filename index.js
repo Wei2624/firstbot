@@ -174,22 +174,22 @@ const actions = {
         "quick_replies":[
           {
             "content_type":"text",
-            "title":"Red",
+            "title":"Seize it!",
             "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
           },
           {
             "content_type":"text",
-            "title":"Green",
+            "title":"Book Another Resveration",
             "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
           },
           {
             "content_type":"text",
-            "title":"Green1",
+            "title":"Cancel A Resveration",
             "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN1"
           },
           {
             "content_type":"text",
-            "title":"Green2",
+            "title":"Get Direction",
             "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN2"
           }
         ]
