@@ -159,7 +159,7 @@ const actions = {
         "attachment":{
           "type": "template",
           "payload":{
-            "template_type": "quick_reply",
+            "template_type": "quick_replies",
             "text": "Pcik a color",
             "quick_replies":[
               { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
