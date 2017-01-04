@@ -154,16 +154,31 @@ const actions = {
   },
   optiongenerator({context, entities}) {
     var user_intent = findEntityValue(entities, 'intent');
-    if (user_intent == 'book') {
-      var message = {
-        text: 'Favorite color?',
-        buttons: [
-          { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
-          { type: 'postback', title: 'Book Another Reservation', payload: 'FAVORITE_BLUE' },
-          { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' }
-        ]
-      };
-      var output = buttonGenerator(message.text,message.buttons);
+    if (user_intent == 'start') {
+      var output = {
+        "attachment":{
+          "type": "template",
+          "payload":{
+            "template_type": "quick_reply",
+            "text": "Pcik a color",
+            "quick_replies":[
+              { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
+              { type: 'postback', title: 'Book Another Reservation', payload: 'FAVORITE_BLUE' },
+              { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' }
+            ]
+
+          }
+        }
+      }
+      // var output = {
+      //   text: 'Favorite color?',
+      //   buttons: [
+      //     { type: 'postback', title: 'Seize it!', payload: 'FAVORITE_RED' },
+      //     { type: 'postback', title: 'Book Another Reservation', payload: 'FAVORITE_BLUE' },
+      //     { type: 'postback', title: 'Cancel A Reservation', payload: 'FAVORITE_GREEN' }
+      //   ]
+      // };
+      //var output = buttonGenerator(message.text,message.buttons);
       console.log(JSON.stringify(output));
       context.options = JSON.stringify(output);
       // const recipientId = sessions[sessionId].fbid;
